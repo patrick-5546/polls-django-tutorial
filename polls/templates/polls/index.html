@@ -1,0 +1,17 @@
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}">
+
+{% if latest_question_list %} <!--Check if key with this name exists-->
+    <ul> <!--Start bulleted list (<li></li> is each bullet)-->
+    {% for question in latest_question_list %}
+        <!--Make a list with text question.question_text and url polls/<question.id>-->
+        <!--`polls` is app namespace and `detail` is url path name-->
+        <!--Dot notation lookup priority: dictionary (my_dict.key), attribute (my_object.attribute),
+            then list-index (my_list.0)-->
+        <li><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No polls are available.</p>
+{% endif %}

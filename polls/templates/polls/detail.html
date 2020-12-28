@@ -1,0 +1,15 @@
+<h1>{{ question.question_text }}</h1> <!--Title is question.question_text-->
+
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+<!--Use "post" when altering data server-side-->
+<form action="{% url 'polls:vote' question.id %}" method="post">
+<!--Use this tag for al POST forms that target internal urls-->
+{% csrf_token %}
+<!--`forloop.count` is the number of times the loop has been run-->
+{% for choice in question.choice_set.all %}
+    <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">
+    <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br>
+{% endfor %}
+<input type="submit" value="Vote">
+</form>
